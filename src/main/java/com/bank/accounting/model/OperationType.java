@@ -5,5 +5,6 @@ package com.bank.accounting.model;
  */
 
 public enum OperationType {
-    DEPOSIT
+    DEPOSIT,
+    WITHDRAWAL
 }
