@@ -1,7 +1,9 @@
 package com.bank.accounting.business.impl;
 
 import com.bank.accounting.business.service.AccountManagementService;
+import com.bank.accounting.business.service.OperationManagementService;
 import com.bank.accounting.business.service.impl.AccountManagementServiceImpl;
+import com.bank.accounting.business.service.impl.OperationManagementServiceImpl;
 import com.bank.accounting.business.service.strategy.Deposit;
 import com.bank.accounting.business.service.strategy.OperationStrategy;
 import com.bank.accounting.business.service.strategy.Withdraw;
@@ -148,16 +150,19 @@ class AccountManagementServiceImplTest {
     }
 
     private void initMocks(OperationType operationType) {
+        OperationManagementService operationManagementServiceMock = new OperationManagementServiceImpl();
         OperationStrategy operationStrategyMock;
         if (OperationType.DEPOSIT == operationType) {
             operationStrategyMock = Deposit.builder().build();
             accountManagementServiceMock = AccountManagementServiceImpl.builder()
+                    .operationManagementService(operationManagementServiceMock)
                     .operationStrategy(operationStrategyMock)
                     .build();
 
         } else if (OperationType.WITHDRAWAL == operationType) {
             operationStrategyMock = Withdraw.builder().build();
             accountManagementServiceMock = AccountManagementServiceImpl.builder()
+                    .operationManagementService(operationManagementServiceMock)
                     .operationStrategy(operationStrategyMock)
                     .build();
 
