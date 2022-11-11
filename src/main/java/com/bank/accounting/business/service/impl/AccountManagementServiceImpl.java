@@ -1,6 +1,7 @@
 package com.bank.accounting.business.service.impl;
 
 import com.bank.accounting.business.service.AccountManagementService;
+import com.bank.accounting.business.service.OperationManagementService;
 import com.bank.accounting.business.service.strategy.OperationStrategy;
 import com.bank.accounting.model.Account;
 import com.bank.accounting.model.Customer;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Builder
 public class AccountManagementServiceImpl implements AccountManagementService {
+    private final OperationManagementService operationManagementService;
     private final OperationStrategy operationStrategy;
 
     @Override
@@ -18,6 +20,7 @@ public class AccountManagementServiceImpl implements AccountManagementService {
         checkOperation(customer, amount);
         Account account = getCustomerAccount(customer);
         operationStrategy.updateAccount(account, amount);
+        operationManagementService.addNewOperation(operationType, amount, account.getBalance());
         return account;
     }
 
